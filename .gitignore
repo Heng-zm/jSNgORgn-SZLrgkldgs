@@ -42,6 +42,7 @@ desktop.ini
 *.temp
 .cache/
 
-# Optional generated audio data
-# Uncomment this line if you do not want generated binary audio committed:
+# Keep generated audio data in Git by default so deployments can build
+# without needing the original audio asset. Uncomment only when your
+# deployment process always runs npm run audio:convert.
 # src/audioData.js

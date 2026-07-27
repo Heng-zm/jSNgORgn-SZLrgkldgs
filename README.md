@@ -1,44 +1,64 @@
 # React Binary Audio Website
 
-This project converts an audio file into Base64 binary text, stores it in the React source, restores it as a Blob when the page opens, and attempts autoplay.
+This Vite + React project converts one local audio file into Base64 chunks, stores those chunks in the application source, restores the bytes inside a Web Worker, creates a temporary Blob URL, and attempts playback when the page opens.
 
-## Run
+## Requirements
+
+- Node.js 18 or newer
+- npm
+
+## Install and run
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Build
+## Production build
 
 ```bash
 npm run build
 ```
 
+The verified production files are generated in `dist/`.
+
 ## Replace the audio
 
-Put one supported file inside the `assets` folder:
+Inside `assets/`, keep exactly one supported file with one of these names:
 
 - `audio.mp3`
 - `audio.wav`
 - `audio.ogg`
 - `audio.m4a`
 - `audio.aac`
+- `audio.webm`
 
-Remove the old sample, add your new file, and run:
+Then run:
 
 ```bash
 npm run audio:convert
 ```
 
-The generated binary data is stored in:
+The converter generates `src/audioData.js` with:
 
-```text
-src/audioData.js
-```
+- Base64 chunks
+- MIME type
+- Original byte length
+- SHA-256 identifier
 
-## Browser autoplay rule
+The converter intentionally fails when multiple supported `audio.*` files exist so it never guesses which file should be embedded.
 
-Modern browsers may block unmuted autoplay on a first visit. This project requests autoplay immediately and retries after the first click, tap, or keypress anywhere on the page.
+## Autoplay behavior
 
-Base64 is encoding, not encryption. It embeds and hides the normal audio path, but it does not prevent a technical user from extracting the audio.
+The page attempts unmuted playback as soon as decoding finishes. Some browsers block first-visit autoplay. In that case, the first later click, tap, or keypress anywhere on the page retries playback; the user does not need to click the Play button specifically.
+
+## Performance improvements
+
+- Decoding runs in a Web Worker instead of blocking the main interface.
+- Base64 is split into valid chunks to reduce peak decoding work.
+- The converter avoids rewriting unchanged generated data.
+- Object URLs, event listeners, and workers are cleaned up correctly.
+
+## Important
+
+Base64 is encoding, not encryption. A technical user can still recover audio that their browser is able to play.

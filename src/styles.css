@@ -39,13 +39,17 @@ button {
 .card {
   position: relative;
   width: min(100%, 570px);
-  padding: 60px 34px 38px;
+  padding: 60px 34px 34px;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 30px;
   background: rgba(15, 23, 42, 0.7);
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.46);
   backdrop-filter: blur(20px);
+}
+
+.card.has-error {
+  border-color: rgba(248, 113, 113, 0.55);
 }
 
 .audio-icon {
@@ -78,14 +82,44 @@ h1 {
   margin: 14px 0 0;
   color: #7dd3fc;
   font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.decode-progress {
+  width: min(100%, 350px);
+  height: 7px;
+  margin-top: 22px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.decode-progress::-webkit-progress-bar {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.decode-progress::-webkit-progress-value {
+  border-radius: 999px;
+  background: linear-gradient(90deg, #8b5cf6, #0ea5e9);
+}
+
+.decode-progress::-moz-progress-bar {
+  border-radius: 999px;
+  background: linear-gradient(90deg, #8b5cf6, #0ea5e9);
 }
 
 .status {
   min-height: 50px;
-  max-width: 430px;
+  max-width: 440px;
   margin: 18px auto 26px;
   color: #cbd5e1;
   line-height: 1.6;
+}
+
+.has-error .status {
+  color: #fecaca;
 }
 
 .controls {
@@ -112,12 +146,17 @@ h1 {
     opacity 160ms ease;
 }
 
-.controls button:hover {
+.controls button:hover:not(:disabled) {
   transform: translateY(-2px);
 }
 
-.controls button:active {
+.controls button:active:not(:disabled) {
   transform: translateY(0);
+}
+
+.controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .controls .secondary {
@@ -150,6 +189,39 @@ h1 {
   animation-delay: var(--delay);
 }
 
+.technical-details {
+  margin-top: 26px;
+  color: #94a3b8;
+  font-size: 0.8rem;
+}
+
+.technical-details summary {
+  cursor: pointer;
+}
+
+.technical-details dl {
+  margin: 14px 0 0;
+}
+
+.technical-details dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 7px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.technical-details dt,
+.technical-details dd {
+  margin: 0;
+}
+
+.technical-details dd {
+  max-width: 70%;
+  color: #cbd5e1;
+  overflow-wrap: anywhere;
+}
+
 @keyframes pulse {
   from {
     height: 5px;
@@ -164,7 +236,7 @@ h1 {
 
 @media (max-width: 520px) {
   .card {
-    padding: 56px 22px 30px;
+    padding: 56px 22px 28px;
     border-radius: 24px;
   }
 
