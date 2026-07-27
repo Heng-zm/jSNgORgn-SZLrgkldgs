@@ -42,4 +42,3 @@ src/audioData.js
 Modern browsers may block unmuted autoplay on a first visit. This project requests autoplay immediately and retries after the first click, tap, or keypress anywhere on the page.
 
 Base64 is encoding, not encryption. It embeds and hides the normal audio path, but it does not prevent a technical user from extracting the audio.
-# jSNgORgn-SZLrgkldgs
