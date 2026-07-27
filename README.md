@@ -1,6 +1,6 @@
-# React Binary Audio Website
+# React Binary Background Audio Website
 
-This React website displays only a solid white page. It restores an audio file embedded as Base64 binary data, attempts to play it automatically, and loops it continuously.
+This React website displays only a solid white page. It restores an audio file embedded as Base64 binary data, attempts to play it automatically, loops continuously, and uses the browser Media Session API for supported background and lock-screen playback controls.
 
 ## Run
 
@@ -24,6 +24,7 @@ Keep exactly one supported audio file in the `assets` folder:
 - `audio.ogg`
 - `audio.m4a`
 - `audio.aac`
+- `audio.webm`
 
 Then run:
 
@@ -37,7 +38,15 @@ The generated binary data is stored in:
 src/audioData.js
 ```
 
-## Browser autoplay behavior
+## Background playback
+
+After playback has been allowed, the audio element is designed to continue when the tab is in the background or the phone screen is locked, where the browser and operating system permit it. Supported devices can show Play, Pause, Stop, and Seek controls through the Media Session API.
+
+The application also attempts to recover playback when the page becomes visible again after browser suspension.
+
+A website cannot guarantee playback after the tab is closed, the browser is terminated, the operating system force-stops the browser, or the browser blocks background media. A native mobile application is required for guaranteed application-level background service behavior.
+
+## Autoplay behavior
 
 The application attempts unmuted playback when the page opens. Browsers may block this on a first visit. In that case, clicking or tapping anywhere on the white page retries playback. There is no visible Play button or player interface.
 

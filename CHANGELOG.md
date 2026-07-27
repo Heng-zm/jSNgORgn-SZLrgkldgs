@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.0
+
+- Added Media Session metadata and background playback controls.
+- Added Play, Pause, Stop, Seek Backward, Seek Forward, and Seek To handlers for supported lock screens and notification controls.
+- Added playback recovery when the page becomes visible or focused again after browser suspension.
+- Preserved the user’s pause choice instead of immediately restarting after a Media Session pause.
+- Added media playback-state and position synchronization.
+- Kept the page completely white with no visible interface.
+
 ## 1.2.0
 
 - Removed the entire visible player interface.
