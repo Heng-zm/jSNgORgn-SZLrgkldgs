@@ -1,16 +1,17 @@
 # Changelog
 
+## 1.2.0
+
+- Removed the entire visible player interface.
+- Replaced gradients and decorative styling with a solid white page.
+- Removed buttons, icons, progress indicators, animations, and technical details.
+- Preserved embedded binary audio decoding, autoplay attempts, looping, and first-interaction playback fallback.
+- Kept worker cancellation, Blob URL cleanup, byte-length validation, and playback error logging.
+
 ## 1.1.0
 
-- Fixed the autoplay unlock listener being consumed before audio was ready.
-- Fixed Play from unexpectedly unmuting audio after the user muted it.
-- Moved Base64 decoding into a cancellable Web Worker.
-- Split generated Base64 into valid chunks to reduce decoding pressure.
-- Added byte-length validation and SHA-256 metadata.
-- Added decoding progress and clearer error states.
-- Added atomic generated-file writes and unchanged-file detection.
-- Added strict handling for missing or multiple `assets/audio.*` files.
-- Added Vite React configuration.
-- Removed the unnecessary icon dependency and replaced it with local SVG icons.
-- Improved cleanup for listeners, workers, audio sources, and Blob URLs.
-- Updated `.gitignore` and project documentation.
+- Moved Base64 decoding to a Web Worker.
+- Added decoder cancellation and cleanup.
+- Added byte-length and SHA-256 metadata.
+- Improved autoplay fallback behavior.
+- Removed the external icon dependency.

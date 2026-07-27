@@ -1,37 +1,29 @@
 # React Binary Audio Website
 
-This Vite + React project converts one local audio file into Base64 chunks, stores those chunks in the application source, restores the bytes inside a Web Worker, creates a temporary Blob URL, and attempts playback when the page opens.
+This React website displays only a solid white page. It restores an audio file embedded as Base64 binary data, attempts to play it automatically, and loops it continuously.
 
-## Requirements
-
-- Node.js 18 or newer
-- npm
-
-## Install and run
+## Run
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Production build
+## Build
 
 ```bash
 npm run build
 ```
 
-The verified production files are generated in `dist/`.
-
 ## Replace the audio
 
-Inside `assets/`, keep exactly one supported file with one of these names:
+Keep exactly one supported audio file in the `assets` folder:
 
 - `audio.mp3`
 - `audio.wav`
 - `audio.ogg`
 - `audio.m4a`
 - `audio.aac`
-- `audio.webm`
 
 Then run:
 
@@ -39,26 +31,14 @@ Then run:
 npm run audio:convert
 ```
 
-The converter generates `src/audioData.js` with:
+The generated binary data is stored in:
 
-- Base64 chunks
-- MIME type
-- Original byte length
-- SHA-256 identifier
+```text
+src/audioData.js
+```
 
-The converter intentionally fails when multiple supported `audio.*` files exist so it never guesses which file should be embedded.
+## Browser autoplay behavior
 
-## Autoplay behavior
+The application attempts unmuted playback when the page opens. Browsers may block this on a first visit. In that case, clicking or tapping anywhere on the white page retries playback. There is no visible Play button or player interface.
 
-The page attempts unmuted playback as soon as decoding finishes. Some browsers block first-visit autoplay. In that case, the first later click, tap, or keypress anywhere on the page retries playback; the user does not need to click the Play button specifically.
-
-## Performance improvements
-
-- Decoding runs in a Web Worker instead of blocking the main interface.
-- Base64 is split into valid chunks to reduce peak decoding work.
-- The converter avoids rewriting unchanged generated data.
-- Object URLs, event listeners, and workers are cleaned up correctly.
-
-## Important
-
-Base64 is encoding, not encryption. A technical user can still recover audio that their browser is able to play.
+Base64 is encoding, not encryption. A technical user can still extract the embedded audio.
