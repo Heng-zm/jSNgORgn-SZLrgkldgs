@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0
+
+- Synchronized package version with the combined backend configuration release.
+- No frontend playback behavior changed in this release.
+
 ## 2.0.0
 
 - Connects the white background-audio page to the supporter FastAPI backend.
