@@ -1,53 +1,36 @@
-# React Binary Background Audio Website
+# React Binary Audio + Telegram Backend
 
-This React website displays only a solid white page. It restores an audio file embedded as Base64 binary data, attempts to play it automatically, loops continuously, and uses the browser Media Session API for supported background and lock-screen playback controls.
+This React 19/Vite page remains completely solid white. It first requests the active audio from the supporter FastAPI backend. The backend audio can be replaced through Telegram `/audio`. If the backend has no audio or is temporarily unavailable, the application uses the embedded Base64 audio as a fallback.
 
 ## Run
 
 ```bash
+cp .env.example .env
 npm install
 npm run dev
 ```
 
-## Build
+Set the deployed supporter backend URL in `.env`:
 
-```bash
-npm run build
+```env
+VITE_BACKEND_URL=https://your-supporter-backend.onrender.com
 ```
 
-## Replace the audio
+## Dynamic update behavior
 
-Keep exactly one supported audio file in the `assets` folder:
+- Requests `GET /api/audio/metadata`.
+- Downloads `GET /api/audio/file?version=...` only when the version changes.
+- Validates byte length and SHA-256 before switching.
+- Keeps the old audio active if the new download is incomplete or invalid.
+- Checks for changes every 15 seconds by default.
+- Preserves background Media Session controls and the first-click autoplay fallback.
 
-- `audio.mp3`
-- `audio.wav`
-- `audio.ogg`
-- `audio.m4a`
-- `audio.aac`
-- `audio.webm`
+## Embedded fallback
 
-Then run:
+Keep exactly one supported audio file in `assets/`, then regenerate the fallback:
 
 ```bash
 npm run audio:convert
 ```
 
-The generated binary data is stored in:
-
-```text
-src/audioData.js
-```
-
-## Background playback
-
-After playback has been allowed, the audio element is designed to continue when the tab is in the background or the phone screen is locked, where the browser and operating system permit it. Supported devices can show Play, Pause, Stop, and Seek controls through the Media Session API.
-
-The application also attempts to recover playback when the page becomes visible again after browser suspension.
-
-A website cannot guarantee playback after the tab is closed, the browser is terminated, the operating system force-stops the browser, or the browser blocks background media. A native mobile application is required for guaranteed application-level background service behavior.
-
-## Autoplay behavior
-
-The application attempts unmuted playback when the page opens. Browsers may block this on a first visit. In that case, clicking or tapping anywhere on the white page retries playback. There is no visible Play button or player interface.
-
-Base64 is encoding, not encryption. A technical user can still extract the embedded audio.
+The embedded fallback remains Base64 encoding, not encryption.

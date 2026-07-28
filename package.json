@@ -1,21 +1,22 @@
 {
-  "name": "react-binary-audio-website",
+  "name": "react-binary-audio-telegram",
   "private": true,
-  "version": "1.3.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "audio:convert": "node scripts/audio-to-binary.mjs",
     "dev": "npm run audio:convert && vite",
     "build": "npm run audio:convert && vite build",
     "preview": "vite preview",
-    "check": "npm run build"
+    "check": "npm run build",
+    "self-check": "node scripts/self-check.mjs",
+    "check:static": "node --check src/App.js && node --check src/main.js && node --check src/config.js && node --check src/audioApi.js && node --check src/audioDecoder.worker.js && node --check vite.config.js"
   },
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
     "vite": "^6.0.5"
   }
 }

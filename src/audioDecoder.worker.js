@@ -2,7 +2,7 @@ import {
   AUDIO_BASE64_CHUNKS,
   AUDIO_BYTE_LENGTH,
   AUDIO_MIME_TYPE,
-} from "./audioData";
+} from "./audioData.js";
 
 function decodeChunk(base64Chunk) {
   const binaryString = self.atob(base64Chunk);
